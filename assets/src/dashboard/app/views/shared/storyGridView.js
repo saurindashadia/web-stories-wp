@@ -42,14 +42,10 @@ import {
   UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
-  DateSettingsPropType,
 } from '../../../types';
 import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import {
-  getRelativeDisplayDate,
-  useGridViewKeys,
-  useFocusOut,
-} from '../../../utils';
+import { getRelativeDisplayDate } from '../../../../date';
+import { useGridViewKeys, useFocusOut } from '../../../utils';
 import { useConfig } from '../../config';
 
 export const DetailRow = styled.div`
@@ -77,7 +73,6 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
-  dateSettings,
   previewStory,
   returnStoryFocusId,
   initialFocusStoryId = null,
@@ -192,8 +187,8 @@ const StoryGridView = ({
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified, dateSettings)
-                      : getRelativeDisplayDate(story?.created, dateSettings)
+                      ? getRelativeDisplayDate(story?.modified)
+                      : getRelativeDisplayDate(story?.created)
                   }
                   {...titleRenameProps}
                 />
@@ -230,7 +225,6 @@ StoryGridView.propTypes = {
   previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateSettings: DateSettingsPropType,
   returnStoryFocusId: PropTypes.number,
   initialFocusStoryId: PropTypes.number,
 };
