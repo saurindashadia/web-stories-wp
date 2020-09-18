@@ -88,6 +88,11 @@ class HTML {
 			);
 		}
 
+		/**
+		 * Document instance.
+		 *
+		 * @var Document $document
+		 */
 		$this->document = $document;
 
 		// Run all further transformations on the Document instance.
