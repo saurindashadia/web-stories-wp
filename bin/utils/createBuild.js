@@ -31,7 +31,6 @@ function createBuild(source, target, composer = false) {
   const ignoredFiles = getIgnoredFiles(source);
 
   if (composer) {
-    ignoredFiles.push('third-party/');
     ignoredFiles.push('includes/vendor/');
   }
 
