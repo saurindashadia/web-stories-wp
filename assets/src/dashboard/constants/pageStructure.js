@@ -26,5 +26,5 @@ export {
 
 export const WPBODY_ID = 'wpbody';
 
-export const DASHBOARD_LEFT_NAV_WIDTH = 190;
+export const DASHBOARD_LEFT_NAV_WIDTH = 288;
 export const DASHBOARD_TOP_MARGIN = 45;
