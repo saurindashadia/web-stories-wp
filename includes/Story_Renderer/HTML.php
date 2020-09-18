@@ -94,8 +94,8 @@ class HTML {
 
 		$this->transform_html_start_tag();
 		$this->insert_analytics_configuration();
-
 		$this->add_poster_images();
+		$this->display_admin_bar();
 
 		if ( ! defined( '\AMP__VERSION' ) ) {
 			$this->sanitize_markup();
@@ -253,6 +253,87 @@ class HTML {
 		];
 
 		return array_filter( $images );
+	}
+
+	/**
+	 * Displays the WordPress admin bar on  the frontend.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function display_admin_bar() {
+		ob_start();
+
+		wp_admin_bar_render();
+
+
+		$output = (string) ob_get_clean();
+
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$document = Document::fromHtmlFragment( $output, get_bloginfo( 'charset' ) );
+
+		if ( ! $document ) {
+			return;
+		}
+
+		$adminbar = $document->getElementById( 'wpadminbar' );
+
+		if ( ! $adminbar ) {
+			return;
+		}
+
+		$adminbar = $this->document->importNode( $adminbar, true );
+
+		if ( $this->document->body->firstChild ) {
+			$this->document->body->firstChild->insertBefore( $adminbar );
+		} else {
+			$this->document->body->appendChild( $adminbar );
+		}
+
+		$this->add_admin_bar_styles();
+	}
+
+	/**
+	 * Prints the admin bar styles.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function add_admin_bar_styles() {
+		ob_start();
+
+		wp_styles()->do_items( 'admin-bar' );
+
+		if ( current_theme_supports( 'admin-bar' ) ) {
+			/**
+			 * To remove the default padding styles from WordPress for the Toolbar, use the following code:
+			 * add_theme_support( 'admin-bar', array( 'callback' => '__return_false' ) );
+			 */
+			$admin_bar_args  = get_theme_support( 'admin-bar' );
+			$header_callback = $admin_bar_args[0]['callback'];
+		}
+
+		if ( empty( $header_callback ) ) {
+			$header_callback = '_admin_bar_bump_cb';
+		}
+
+		call_user_func( $header_callback );
+
+		$output = (string) ob_get_clean();
+
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml( $output );
+
+		$this->document->head->appendChild( $fragment );
 	}
 
 	/**
