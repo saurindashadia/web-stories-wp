@@ -26,14 +26,14 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AMP_Allowed_Tags_Generated;
-use AMP_Content_Sanitizer;
-use AMP_DOM_Utils;
-use AmpProject\Amp;
-use AmpProject\Attribute;
-use AmpProject\Dom\Document;
-use AmpProject\Extension;
-use AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
+use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
+use Google\Web_Stories_Dependencies\AmpProject\Amp;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Extension;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
 
 /**
@@ -420,7 +420,7 @@ class Sanitization {
 		$sanitizers['AMP_Style_Sanitizer']['allow_transient_caching'] = false;
 
 		// Force style sanitizer, meta sanitizer, and validating sanitizer to be at end.
-		foreach ( [ 'AMP_Style_Sanitizer', 'AMP_Meta_Sanitizer', 'AMP_Tag_And_Attribute_Sanitizer' ] as $class_name ) {
+		foreach ( [ 'AMP_Style_Sanitizer', Meta_Sanitizer::class, 'AMP_Tag_And_Attribute_Sanitizer' ] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );

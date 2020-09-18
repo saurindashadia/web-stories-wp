@@ -71,5 +71,20 @@
     }
   ],
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "post-install-cmd": [
+      "@prefix-dependencies"
+    ],
+    "post-update-cmd": [
+      "@prefix-dependencies"
+    ],
+    "prefix-dependencies": [
+      "php-scoper add-prefix --output-dir=./third-party --force --quiet",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
+      "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./includes/composer.json",
+      "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative"
+    ]
+  }
 }

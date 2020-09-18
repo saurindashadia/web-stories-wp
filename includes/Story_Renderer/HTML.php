@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
-use AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use DOMElement;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;

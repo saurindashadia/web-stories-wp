@@ -65,6 +65,7 @@
 	<exclude-pattern>*/build/*</exclude-pattern>
 	<exclude-pattern>*/data/*</exclude-pattern>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/third-party/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>assets/js/*.asset.php</exclude-pattern>
 	<exclude-pattern>tests/phpstan/bootstrap.php</exclude-pattern>
